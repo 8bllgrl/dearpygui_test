@@ -32,10 +32,14 @@ class AudioTab:
             self.master_control = AudioControl("Master Volume", self.master_enabled, self.master_volume,
                                                self.update_master_enabled, self.update_master_volume)
             self.master_control.create()
+            dpg.set_item_user_data(self.master_control.volume_id, self.master_control)
+            dpg.set_item_callback(self.master_control.volume_id, self.master_control.on_release)
 
             dpg.add_text("Channel Volumes", bullet=True)
             for control in self.audio_controls.values():
                 control.create()
+                dpg.set_item_user_data(control.volume_id, control)
+                dpg.set_item_callback(control.volume_id, control.on_release)
 
             self.audio_quality_id = dpg.add_combo(label="Audio Quality", items=["Low", "Medium", "High"],
                                                   default_value=self.audio_quality, callback=self.update_audio_quality)
@@ -53,11 +57,11 @@ class AudioTab:
         self.audio_controls[label].enabled = enabled
 
     def update_control_volume(self, label, volume):
-        print(f"Updating volume for label: {label}")  # Debug print
+        print(f"Updating volume for label: {label}")
         if label in self.audio_controls:
             self.audio_controls[label].volume = volume
         else:
-            print(f"Error: {label} not found in audio_controls")  # More debugging
+            print(f"Error: {label} not found in audio_controls")
 
     def update_audio_quality(self, sender, app_data):
         self.audio_quality = app_data
@@ -91,7 +95,23 @@ class AudioControl:
 
     def create(self):
         with dpg.group(horizontal=True):
-            self.volume_id = dpg.add_slider_float(default_value=self.volume, min_value=0.0, max_value=1.0,
-                                                  callback=self.volume_callback)
-            self.checkbox_id = dpg.add_checkbox(default_value=self.enabled, callback=self.enabled_callback)
+            self.volume_id = dpg.add_slider_float(
+                default_value=self.volume,
+                min_value=0.0,
+                max_value=1.0,
+                callback=self.volume_callback,
+                user_data=self,
+                drag_callback=self.on_drag,
+            )
+            self.checkbox_id = dpg.add_checkbox(
+                default_value=self.enabled,
+                callback=self.enabled_callback
+            )
             dpg.add_text(self.label)
+
+    def on_drag(self, sender, app_data):
+        self.volume_callback(sender, app_data)
+
+    def on_release(self, sender, app_data):
+        current_volume = dpg.get_value(self.volume_id)
+        print(f"Volume for {self.label} set to: {current_volume}")
