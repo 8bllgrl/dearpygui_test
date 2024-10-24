@@ -1,4 +1,5 @@
 import dearpygui.dearpygui as dpg
+from imguipackage1.theme.colors import Colors
 
 
 class AudioControl:
@@ -18,7 +19,6 @@ class AudioControl:
             self.checkbox_id = dpg.add_checkbox(default_value=self.enabled, callback=self.enabled_callback)
             dpg.add_text(self.label)
 
-
 class AudioTab:
     def __init__(self):
         self.master_volume = 0.5
@@ -26,6 +26,9 @@ class AudioTab:
 
         # Audio controls
         self.audio_controls = {
+            "Master": AudioControl("Master Volume", True, self.master_volume,
+                                   lambda s, a: self.update_control_enabled("Master", a),
+                                   lambda s, a: self.update_control_volume("Master", a)),
             "BGM": AudioControl("BGM", True, 0.5, lambda s, a: self.update_control_enabled("BGM", a),
                                 lambda s, a: self.update_control_volume("BGM", a)),
             "Performance": AudioControl("Performance", True, 0.5,
@@ -41,17 +44,27 @@ class AudioTab:
 
     def create(self):
         with dpg.tab(label="Audio"):
-            dpg.add_text("Audio Settings", color=(255, 255, 255))
-            dpg.add_slider_float(label="Master Volume", default_value=self.master_volume, min_value=0.0, max_value=1.0,
-                                 callback=self.update_master_volume)
+            self.add_audio_settings_text()
+            self.add_audio_controls()
+            self.add_audio_quality_combo()
+            self.add_reset_button()
 
-            dpg.add_text("Channel Volumes", bullet=True)
-            for control in self.audio_controls.values():
-                control.create()
+    def add_audio_settings_text(self):
+        dpg.add_text("Audio Settings", color=Colors.BRIGHT_WHITE, bullet=False, tag="audio_settings_header")
+        dpg.add_separator()
+        dpg.add_text("- - Channel Volumes - -", color=Colors.BRIGHT_WHITE, bullet=False,
+                     tag="channel_volumes_header")
 
-            self.audio_quality_id = dpg.add_combo(label="Audio Quality", items=["Low", "Medium", "High"],
-                                                  default_value=self.audio_quality, callback=self.update_audio_quality)
-            dpg.add_button(label="Reset Audio Settings", callback=self.reset_audio_settings)
+    def add_audio_controls(self):
+        for control in self.audio_controls.values():
+            control.create()
+
+    def add_audio_quality_combo(self):
+        self.audio_quality_id = dpg.add_combo(label="Audio Quality", items=["Low", "Medium", "High"],
+                                              default_value=self.audio_quality, callback=self.update_audio_quality)
+
+    def add_reset_button(self):
+        dpg.add_button(label="Reset Audio Settings", callback=self.reset_audio_settings)
 
     def update_master_volume(self, sender, app_data):
         self.master_volume = app_data
@@ -74,12 +87,11 @@ class AudioTab:
         self.audio_quality = "High"
 
         dpg.set_value(self.audio_quality_id, self.audio_quality)
+
         for control in self.audio_controls.values():
             control.volume = 0.5
             control.enabled = True
             dpg.set_value(control.volume_id, control.volume)
             dpg.set_value(control.checkbox_id, control.enabled)
 
-        dpg.set_value(self.master_volume_id, self.master_volume)
         print("Audio settings have been reset to default.")
-
