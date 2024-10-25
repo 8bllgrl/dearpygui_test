@@ -8,7 +8,7 @@ class GraphicsTab(TabInterface):
         self.resolution = (1920, 1080)
         self.fullscreen = False
 
-    def create(self):
+    def draw(self):
         with dpg.tab(label="Graphics"):
             dpg.add_text("Graphics Settings")
             dpg.add_combo(label="Resolution", items=["1920x1080", "1280x720", "800x600"], default_value="1920x1080", callback=self.update_resolution)

@@ -24,4 +24,4 @@ class TabManager:
 
     def draw_tabs(self):
         for tab in self.tabs:
-            tab.create()
+            tab.draw()

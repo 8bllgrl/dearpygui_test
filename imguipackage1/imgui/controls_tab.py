@@ -9,7 +9,7 @@ class ControlsTab(TabInterface):
         self.controls_settings = controls_settings
         pass
 
-    def create(self):
+    def draw(self):
         with dpg.tab(label="Controls"):
             dpg.add_text("Control Settings Here")
             dpg.add_input_text(label="Key Bind", default_value="W")

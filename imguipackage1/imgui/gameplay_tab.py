@@ -8,7 +8,7 @@ class GameplayTab(TabInterface):
         self.difficulty = "Normal"
         self.show_hints = True
 
-    def create(self):
+    def draw(self):
         with dpg.tab(label="Gameplay"):
             dpg.add_text("Gameplay Settings")
             dpg.add_combo(label="Difficulty", items=["Easy", "Normal", "Hard"], default_value=self.difficulty, callback=self.update_difficulty)

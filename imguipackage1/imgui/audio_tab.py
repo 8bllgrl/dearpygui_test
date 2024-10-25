@@ -10,7 +10,7 @@ class AudioTab(TabInterface):
         self.audio_settings = audio_settings
         self.volume_controls = []
 
-    def create(self):
+    def draw(self):
         with dpg.tab(label="Audio"):
             self.add_audio_settings_text()
             self.add_volume_control("Master Volume", self.audio_settings.master_volume, AudioSetting.MASTER_VOLUME)
