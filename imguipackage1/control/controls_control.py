@@ -1,0 +1,2 @@
+class ControlsSettings:
+    pass

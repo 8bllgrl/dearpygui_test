@@ -1,6 +1,9 @@
 import dearpygui.dearpygui as dpg
 
-class GameplayTab:
+from imguipackage1.imgui.tab_abc import TabInterface
+
+
+class GameplayTab(TabInterface):
     def __init__(self):
         self.difficulty = "Normal"
         self.show_hints = True

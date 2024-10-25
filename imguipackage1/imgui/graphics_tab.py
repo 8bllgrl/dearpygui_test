@@ -1,5 +1,9 @@
 import dearpygui.dearpygui as dpg
-class GraphicsTab:
+
+from imguipackage1.imgui.tab_abc import TabInterface
+
+
+class GraphicsTab(TabInterface):
     def __init__(self):
         self.resolution = (1920, 1080)
         self.fullscreen = False

@@ -1,7 +1,12 @@
 import dearpygui.dearpygui as dpg
 
-class ControlsTab:
-    def __init__(self):
+from imguipackage1.control.controls_control import ControlsSettings
+from imguipackage1.imgui.tab_abc import TabInterface
+
+
+class ControlsTab(TabInterface):
+    def __init__(self, controls_settings: ControlsSettings):
+        self.controls_settings = controls_settings
         pass
 
     def create(self):

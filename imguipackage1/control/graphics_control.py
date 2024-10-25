@@ -1,0 +1,3 @@
+class GraphicsSettings:
+    pass
+
