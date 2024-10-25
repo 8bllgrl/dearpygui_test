@@ -22,16 +22,12 @@ class Application:
         self.viewport.center_on_monitor()
 
         with dpg.handler_registry():
-            dpg.add_key_press_handler(dpg.mvKey_A, callback=self.on_a_press)
             dpg.add_key_press_handler(dpg.mvKey_Escape, callback=self.on_escape_press)
 
         dpg.setup_dearpygui()
         dpg.show_viewport()
         dpg.start_dearpygui()
         dpg.destroy_context()
-
-    def on_a_press(self, sender, app_data):
-        print("A pressed")
 
     def on_escape_press(self, sender, app_data):
         self.ui_visible = not self.ui_visible
