@@ -11,7 +11,11 @@ class AudioTab:
         with dpg.tab(label="Audio"):
             self.add_audio_settings_text()
             self.add_volume_control("Master Volume", self.audio_manager.master_volume, AudioSetting.MASTER_VOLUME)
-            self.add_volume_control("Music Volume", self.audio_manager.music_volume, AudioSetting.MUSIC_VOLUME)
+            dpg.add_spacer(width=0, height=3)  # This is weird to be here but dealing with it.
+            self.add_volume_control("Music", self.audio_manager.music_volume, AudioSetting.MUSIC_VOLUME)
+            self.add_volume_control("Sound Effects", self.audio_manager.sfx_volume, AudioSetting.SFX_VOLUME)
+            self.add_volume_control("Voice", self.audio_manager.voice_volume, AudioSetting.VOICE_VOLUME)
+            self.add_volume_control("Ambience", self.audio_manager.ambience_volume, AudioSetting.AMBIENCE_VOLUME)
             self.add_reset_button()
 
     def add_audio_settings_text(self):
