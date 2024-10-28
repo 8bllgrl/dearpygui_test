@@ -19,3 +19,4 @@ class Colors(Enum):
     MAROON = "#800000"
     CRIMSON = "#DC143C"
     SCARLET = "#FF2400"
+    SALMON = "#fa927d"
