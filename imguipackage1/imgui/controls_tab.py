@@ -6,8 +6,7 @@ class ControlsTab(TabInterface):
     def __init__(self, controls_settings: ControlsSettings):
         self.controls_settings = controls_settings
         self.selected_key = dpg.mvKey_W
-        # Define a list of keybind labels to be used dynamically
-        self.keybind_labels = ["Key Bind 1", "Key Bind 2", "Key Bind 3"]  # Add or remove labels as needed
+        self.keybind_labels = ["Key Bind 1", "Key Bind 2", "Key Bind 3"]
 
     def add_key_bind_pair(self, label, key_options):
         with dpg.table_row():
@@ -24,10 +23,9 @@ class ControlsTab(TabInterface):
 
             with dpg.table(header_row=False, resizable=True, policy=dpg.mvTable_SizingStretchProp,
                            borders_outerH=True, borders_innerV=True, borders_innerH=True, borders_outerV=True):
-                dpg.add_table_column(init_width_or_weight=2)  # Make first column wider
-                dpg.add_table_column(init_width_or_weight=1)  # Make second column narrower
+                dpg.add_table_column(init_width_or_weight=2)
+                dpg.add_table_column(init_width_or_weight=1)
 
-                # Dynamically create rows based on keybind_labels
                 for label in self.keybind_labels:
                     self.add_key_bind_pair(label, key_options)
 
