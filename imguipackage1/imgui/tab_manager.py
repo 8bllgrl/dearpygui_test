@@ -18,7 +18,9 @@ class TabManager:
         self.tabs = [
             AudioTab(self.audio_manager),
             ControlsTab(self.controls_manager),
+            GameplayTab(),
             # GameplayTab(self.gameplay_manager),
+            GraphicsTab()
             # GraphicsTab(self.graphics_manager)
         ]
 
